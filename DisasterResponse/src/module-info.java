@@ -1,0 +1,3 @@
+module DisasterResponse {
+    exports main;
+}
