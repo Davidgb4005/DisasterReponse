@@ -1,44 +1,34 @@
 package EndUsersSubscriptions;
 
+import MidUserSubscriptions.ManyToOneBiDirectionalSubscription;
 import main.Person;
-import main.Subscriptions;
 
-import java.util.*;
+import java.util.Vector;
 
-public class MissingPersonSubscription extends Subscriptions<Person> {
+public class MissingPersonSubscription extends ManyToOneBiDirectionalSubscription {
     public MissingPersonSubscription(String name){
         super(name);
     }
-
-    class Pair{
-        public Pair(Person p,String looker,String lookee){
-            this.looker=p;
-            this.lookerName=looker;
-            this.lookeeName = lookee;
+    public class MissingPair{
+        MissingPair(Person looker,String lookee){
+            this.lookee = lookee;
+            this.looker = looker;
         }
         Person looker;
-        String lookerName;
-        String lookeeName;
+        String lookee;
     }
+    Vector<MissingPair> missingPersons = new Vector<>();
 
-    public Vector<Pair> lookingForPersons = new Vector<>();
-
-    public Person registerMissingPerson(Person looker,String lookerName,String lookeeName){
-        for (Pair p : lookingForPersons){
-            if (p.lookeeName.equals(lookerName) && p.lookerName.equals(lookeeName)){
-                lookingForPersons.remove(p);
-                System.out.println(lookerName+" Found "+lookeeName);
-                return p.looker;
-        }
-        }
-        lookingForPersons.add(new Pair(looker,lookerName,lookeeName));
-        return null;
+    public void registerMissingPerson(Person looker, String lookee){
+        missingPersons.add(new MissingPair(looker,lookee));
     }
-    public void unregiesterMissingPerson(Person looker,String lookerName,String lookeeName){
-        for (Pair p : lookingForPersons) {
-            if (p.looker.equals(looker) && p.lookeeName.equals(lookerName)) {
-                lookingForPersons.remove(p);
+    public Vector<Person> searchMissingPersons(String lookerName,String lookeeName){
+        Vector<Person> tempVec = new Vector<>();
+        for (MissingPair p : missingPersons){
+            if (p.looker.getName().equals(lookeeName) && p.lookee.equals(lookerName)){
+                tempVec.add(p.looker);
             }
         }
+        return tempVec;
     }
 }

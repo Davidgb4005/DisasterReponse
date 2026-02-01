@@ -1,6 +1,6 @@
-package EndUserTypes;
+package EndUserTypes.AdultTypes.AdultSubTypes;
 
-import main.Person;
+import EndUserTypes.AdultTypes.Adult;
 
 public class Child extends Adult {
     public Child(){
